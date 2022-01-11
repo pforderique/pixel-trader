@@ -92,6 +92,7 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Art = require("./models/art");
 
 // import authentication library
 const auth = require("./auth");
@@ -123,6 +124,15 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+//! test routes only!
+router.get("/users", (req, res) => {
+  User.find({}).then((users) => res.send(users));
+});
+
+router.get("/arts", (req, res) => {
+  Art.find({}).then((arts) => res.send(arts));
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
