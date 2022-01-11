@@ -13,6 +13,9 @@
 | - Actually starts the webserver
 */
 
+// dotenv
+require("dotenv").config();
+
 // validator runs some basic checks to make sure you've set everything up correctly
 // this is a tool provided by staff, so you don't need to worry about it
 const validator = require("./validator");
@@ -32,10 +35,8 @@ const auth = require("./auth");
 const socketManager = require("./server-socket");
 
 // Server configuration below
-// TODO change connection URL after setting up your team database
-const mongoConnectionURL = "FILL ME IN";
-// TODO change database name to the name you chose
-const databaseName = "FILL ME IN";
+const mongoConnectionURL = process.env.mongoConnectionURL;
+const databaseName = process.env.databaseName;
 
 // connect to mongodb
 mongoose
