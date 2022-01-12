@@ -1,6 +1,10 @@
-.Gallery-container {
+.ArtGrid-container {
   background-color: var(--white);
   padding: var(--m);
   border-radius: var(--l);
   margin: var(--m) 0 0 0;
+}
+
+.ArtGrid-grid {
+  display: grid;
 }

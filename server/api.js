@@ -6,9 +6,6 @@
 | This file defines the routes for your server.
 |
 */
-const MY_NAME = "fabrizzioorderique";
-const ISAUTH = true;
-
 const data = {
   users: [
     {
@@ -101,7 +98,7 @@ const auth = require("./auth");
 const router = express.Router();
 
 //initialize socket
-const socketManager = require("./server-socket");
+// const socketManager = require("./server-socket");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -114,16 +111,19 @@ router.get("/whoami", (req, res) => {
   res.send(req.user);
 });
 
-router.post("/initsocket", (req, res) => {
-  // do nothing if user not logged in
-  if (req.user)
-    socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
-  res.send({});
-});
+// router.post("/initsocket", (req, res) => {
+//   // do nothing if user not logged in
+//   if (req.user)
+//     socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
+//   res.send({});
+// });
 
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+router.get("/user", (req, res) => {
+  User.findById(req.query.user_id).then((user) => res.send(user));
+});
 
 //! test routes only!
 router.get("/users", (req, res) => {

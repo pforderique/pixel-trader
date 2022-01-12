@@ -4,8 +4,8 @@ import Explore from "./pages/Explore.js";
 import NotFound from "./pages/NotFound.js";
 import Profile from "./pages/Profile.js";
 
-import { socket } from "../client-socket.js";
-import { get, post } from "../utilities";
+// import { socket } from "../client-socket.js";
+import { get, post } from "../utilities.js";
 import NavBar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -14,7 +14,7 @@ import "../utilities.css";
  * Define the "App" component
  */
 const App = () => {
-  const [userId, setUserId] = useState(undefined);
+  const [curr_user_id, setUserId] = useState(undefined);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -30,7 +30,7 @@ const App = () => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
-      post("/api/initsocket", { socketid: socket.id });
+      // post("/api/initsocket", { socketid: socket.id });
     });
   };
 
@@ -41,10 +41,10 @@ const App = () => {
 
   return (
     <>
-      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-      <h1>Youre logged in with userid: {userId}</h1>
+      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} curr_user_id={curr_user_id} />
+      <h1>Youre logged in with userid: {curr_user_id}</h1>
       <Router>
-        {/* <Explore path="/" userId={userId} /> */}
+        {/* <Explore path="/" curr_user_id={curr_user_id} /> */}
         <Profile path="/profile/:userid" />
         <NotFound default />
       </Router>

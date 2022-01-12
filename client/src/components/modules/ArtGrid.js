@@ -1,17 +1,17 @@
 import React from "react";
 
 import "../../utilities.css";
-import "./Gallery.css";
+import "./ArtGrid.css";
 
-const Gallery = (props) => {
+const ArtGrid = (props) => {
   return (
     <>
-      <div className="Gallery-container">
-        <div className="u-xlarge">Gallery</div>
-        {/* GalleryGrid here, justified center*/}
+      <div className="ArtGrid-container">
+        <div className="u-xlarge">{props.title}:</div>
+        <div className="ArtGrid-grid">Not Implemented.</div>
       </div>
     </>
   );
 };
 
-export default Gallery;
+export default ArtGrid;
