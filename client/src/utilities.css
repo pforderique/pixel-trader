@@ -50,6 +50,13 @@ form {
   flex-grow: 1;
 }
 
+.u-main-container {
+  background-color: var(--primary--light);
+  padding: var(--m);
+  margin: var(--l);
+  border-radius: var(--l);
+}
+
 .u-transparent {
   opacity: 0.7;
 }
@@ -81,6 +88,10 @@ form {
 
 .u-xlarge {
   font-size: x-large;
+}
+
+.u-large {
+  font-size: large;
 }
 
 .u-textCenter {

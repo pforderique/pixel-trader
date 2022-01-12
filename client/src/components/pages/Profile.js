@@ -5,7 +5,6 @@ import ArtGrid from "../modules/ArtGrid";
 import MainProfile from "../modules/MainProfile";
 
 import "../../utilities.css";
-import "./Profile.css";
 
 const Profile = (props) => {
   const [user, setUser] = useState(undefined);
@@ -14,7 +13,7 @@ const Profile = (props) => {
     get("/api/user", { user_id: props.userid }).then((u) => {
       setUser(u);
       console.log(
-        `Profile of user: ${u.name} with id ${props.userid} -- ${u.art_owned}`
+        `Profile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
       );
     });
   }, []);
@@ -23,8 +22,8 @@ const Profile = (props) => {
 
   return (
     <>
-      <div className="Profile-container u-transparent">
-        <MainProfile user={user} />
+      <div className="u-main-container u-transparent">
+        <MainProfile user={user} curr_user_id={props.curr_user_id} />
         <ArtGrid
           title={"Gallery"}
           include_owner={false}

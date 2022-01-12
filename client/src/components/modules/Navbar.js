@@ -19,17 +19,17 @@ const NavBar = (props) => {
         <Link to="/" className="NavBar-link">
           Explore
         </Link>
-        {props.userId && (
-          <Link to={`/profile/${props.userId}`} className="NavBar-link">
+        {props.curr_user_id && (
+          <Link to={`/profile/${props.curr_user_id}`} className="NavBar-link">
             Profile
           </Link>
         )}
-        {props.userId && (
+        {props.curr_user_id && (
           <Link to={`/create`} className="NavBar-link">
             Create
           </Link>
         )}
-        {props.userId ? (
+        {props.curr_user_id ? (
           <GoogleLogout
             clientId={GOOGLE_CLIENT_ID}
             buttonText="Logout"

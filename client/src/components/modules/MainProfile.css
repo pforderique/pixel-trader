@@ -9,6 +9,9 @@
 .MainProfile-userInfo {
   padding: var(--m) var(--l);
   margin-left: var(--m);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .MainProfile-imageContainer {

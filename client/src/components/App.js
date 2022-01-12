@@ -49,7 +49,7 @@ const App = () => {
       <h1>Youre logged in with userid: {curr_user_id}</h1>
       <Router>
         {/* <Explore path="/" curr_user_id={curr_user_id} /> */}
-        <Profile path="/profile/:userid" />
+        <Profile path="/profile/:userid" curr_user_id={curr_user_id} />
         <NotFound default />
       </Router>
     </>

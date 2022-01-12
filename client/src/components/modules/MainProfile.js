@@ -18,12 +18,15 @@ const MainProfile = (props) => {
       </span>
       <span className="MainProfile-userInfo">
         <div className="MainProfile-username u-bold">{props.user.name}</div>
-        <div className="MainProfile-FollowContainer">
-          <span className="MainProfile-FollowInfo">Following: {props.user.following}</span>
-          <span className="MainProfile-FollowInfo">Followers: {props.user.followers}</span>
+        <div>
+          <div className="u-large">Followers: {props.user.followers}</div>
+          <div className="u-large">Following: {props.user.following}</div>
         </div>
         <div>Net Worth: {props.user.networth} VC</div>
         <div>Gallery: {props.user.art_owned.length}</div>
+        {props.curr_user_id && props.curr_user_id !== props.user._id && (
+          <div>Follow</div>
+        )}
       </span>
     </div>
   );

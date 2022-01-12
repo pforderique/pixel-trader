@@ -3,7 +3,8 @@ const User = require("./models/user");
 const socketManager = require("./server-socket");
 
 // create a new OAuth client used to verify google sign-in
-const CLIENT_ID = "170675107127-kmmn659d6jd5ocajlld82mqbvbddmi6g.apps.googleusercontent.com";
+const CLIENT_ID =
+  "170675107127-kmmn659d6jd5ocajlld82mqbvbddmi6g.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
 // accepts a login token from the frontend, and verifies that it's legit
@@ -26,9 +27,9 @@ function getOrCreateUser(user) {
       name: user.name,
       googleid: user.sub,
       art_owned: [],
-      networth: 0,
-      following: 0,
-      followers: 0,
+      networth: 30000,
+      following: 514,
+      followers: 365,
       profile_pic: null,
       date_joined: Date.now(),
     });
