@@ -125,6 +125,25 @@ router.get("/user", (req, res) => {
   User.findById(req.query.user_id).then((user) => res.send(user));
 });
 
+router.get("/art", (req, res) => {
+  Art.findById(req.query.art_id).then((art) => res.send(art));
+});
+
+router.post("/art", (req, res) => {
+  const art = new Art({
+    creator_id: req.body.creator_id,
+    name: req.body.name,
+    owner_id: req.body.owner_id,
+    pixels: req.body.pixels,
+    value: 0,
+    likes: 0,
+    views: 0,
+    for_sale: req.body.for_sale,
+    date_created: Date.now(),
+  });
+  return art.save();
+});
+
 //! test routes only!
 router.get("/users", (req, res) => {
   User.find({}).then((users) => res.send(users));
@@ -132,6 +151,13 @@ router.get("/users", (req, res) => {
 
 router.get("/arts", (req, res) => {
   Art.find({}).then((arts) => res.send(arts));
+});
+
+router.get("/sheesh", (req, res) => {
+  // User.findById(req.query.user_id).then((user) => {
+  //   user.art_owned.push("61de4487c96b92559c18cd49");
+  //   user.save();
+  // });
 });
 
 // anything else falls to this "not found" case

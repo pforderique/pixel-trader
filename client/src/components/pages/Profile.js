@@ -13,7 +13,9 @@ const Profile = (props) => {
     document.title = "PixelTrader: Profile";
     get("/api/user", { user_id: props.userid }).then((u) => {
       setUser(u);
-      console.log(`Profile of user: ${u.name} with id ${props.userid} -- ${u.art_owned}`);
+      console.log(
+        `Profile of user: ${u.name} with id ${props.userid} -- ${u.art_owned}`
+      );
     });
   }, []);
 
@@ -23,7 +25,11 @@ const Profile = (props) => {
     <>
       <div className="Profile-container u-transparent">
         <MainProfile user={user} />
-        <ArtGrid title={"Gallery"} include_owner={false} arts={user.art_owned} />
+        <ArtGrid
+          title={"Gallery"}
+          include_owner={false}
+          arts={user.art_owned}
+        />
       </div>
     </>
   );

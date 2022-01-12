@@ -41,7 +41,11 @@ const App = () => {
 
   return (
     <>
-      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} curr_user_id={curr_user_id} />
+      <NavBar
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+        curr_user_id={curr_user_id}
+      />
       <h1>Youre logged in with userid: {curr_user_id}</h1>
       <Router>
         {/* <Explore path="/" curr_user_id={curr_user_id} /> */}

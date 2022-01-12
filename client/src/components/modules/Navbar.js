@@ -8,7 +8,8 @@ import "./NavBar.css";
  * The navigation bar at the top of all pages.
  */
 
-const GOOGLE_CLIENT_ID = "170675107127-kmmn659d6jd5ocajlld82mqbvbddmi6g.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID =
+  "170675107127-kmmn659d6jd5ocajlld82mqbvbddmi6g.apps.googleusercontent.com";
 
 const NavBar = (props) => {
   return (

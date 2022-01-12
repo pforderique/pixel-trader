@@ -8,7 +8,6 @@ const ArtSchema = new mongoose.Schema({
   value: Number,
   likes: Number,
   views: Number,
-  tags: [String],
   for_sale: Boolean,
   date_created: Date,
 });
