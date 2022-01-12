@@ -1,0 +1,36 @@
+.NavBar-container {
+  padding: var(--s) var(--m);
+  background-color: var(--primary--lightest);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NavBar-title {
+  color: var(--primary--darkest);
+  font-size: x-large;
+}
+
+.NavBar-linkContainer {
+  margin-left: var(--l);
+}
+
+.NavBar-linkItem {
+  margin-left: var(--l);
+}
+
+.NavBar-link,
+.NavBar-link:visited {
+  color: var(--primary--darkest);
+  opacity: 1;
+  text-decoration: none;
+  font-size: large;
+}
+
+.NavBar-link:hover {
+  opacity: 0.6;
+}
+
+.NavBar-link + .NavBar-link {
+  margin-left: var(--m);
+}

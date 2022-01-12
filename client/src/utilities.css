@@ -14,32 +14,44 @@
 * much after initial creation.
 */
 
-/* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Goldman&family=Source+Code+Pro:ital@1&display=swap");
 
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
-  --darkgrey: #d4d4d4;
-  --medgrey: #e0e0e0;
+  --primary--darkest: #2f5d62;
+  --primary--dark: #5e8b7e;
+  --primary--light: #a7c4bc;
+  --primary--lightest: #dfeeea;
+  --darkgrey: #aaaaaa;
   --grey: #f7f7f7;
   --white: #fff;
+  --lightgreen: #4dffcc;
+  --lightred: #db0909;
 
   --xs: 4px;
   --s: 8px;
   --m: 16px;
   --l: 24px;
+  --xl: 48px;
+}
+
+html {
+  background-color: var(--primary--darkest);
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Goldman", "Open Sans", sans-serif;
   font-weight: 300;
 }
 
 form {
   flex-grow: 1;
+}
+
+.u-transparent {
+  opacity: 0.7;
 }
 
 .u-flex {
@@ -65,6 +77,10 @@ form {
 
 .u-bold {
   font-weight: 600;
+}
+
+.u-xlarge {
+  font-size: x-large;
 }
 
 .u-textCenter {

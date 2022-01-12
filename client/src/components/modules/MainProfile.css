@@ -1,0 +1,37 @@
+.MainProfile-container {
+  background-color: var(--white);
+  padding: var(--m);
+  border-radius: var(--l);
+  display: flex;
+  justify-content: center;
+}
+
+.MainProfile-userInfo {
+  padding: var(--m) var(--l);
+  margin-left: var(--m);
+}
+
+.MainProfile-imageContainer {
+  width: 10%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.MainProfile-username {
+  font-size: xx-large;
+}
+
+.MainProfile-img {
+  margin-left: var(--l);
+  padding: var(--m);
+  max-width: 100%;
+  height: auto;
+}
+
+.MainProfile-FollowContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--m);
+  font-size: large;
+}

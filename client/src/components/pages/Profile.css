@@ -1,0 +1,6 @@
+.Profile-container {
+  background-color: var(--primary--light);
+  padding: var(--m);
+  margin: var(--l);
+  border-radius: var(--l);
+}

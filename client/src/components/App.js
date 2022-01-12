@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
+import Explore from "./pages/Explore.js";
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
-
-import "../utilities.css";
+import Profile from "./pages/Profile.js";
 
 import { socket } from "../client-socket.js";
-
 import { get, post } from "../utilities";
+import NavBar from "./modules/Navbar.js";
+
+import "../utilities.css";
 
 /**
  * Define the "App" component
@@ -40,8 +41,11 @@ const App = () => {
 
   return (
     <>
+      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+      <h1>Youre logged in with userid: {userId}</h1>
       <Router>
-        <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        {/* <Explore path="/" userId={userId} /> */}
+        <Profile path="/profile/:userid" />
         <NotFound default />
       </Router>
     </>
