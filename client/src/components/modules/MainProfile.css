@@ -15,8 +15,8 @@
 }
 
 .MainProfile-imageContainer {
-  width: 10%;
-  height: 10%;
+  width: 12%;
+  height: 12%;
   display: flex;
   justify-content: center;
 }
@@ -32,9 +32,28 @@
   height: auto;
 }
 
-.MainProfile-FollowContainer {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: var(--m);
-  font-size: large;
+.MainProfile-UnfollowButton {
+  background-color: var(--primary--darkest);
+  color: var(--white);
+  border-radius: var(--m);
+  font: var(--primary-font);
+  max-width: min-content;
+  padding: var(--xs) var(--m);
+}
+.MainProfile-UnfollowButton:hover {
+  background-color: var(--primary--dark);
+  cursor: pointer;
+}
+
+.MainProfile-FollowButton {
+  background-color: var(--primary--lightest);
+  color: var(--primary--darkest);
+  border-radius: var(--m);
+  font: var(--primary-font);
+  max-width: min-content;
+  padding: var(--xs) var(--m);
+}
+.MainProfile-FollowButton:hover {
+  background-color: var(--primary--light);
+  cursor: pointer;
 }

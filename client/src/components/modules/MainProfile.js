@@ -60,15 +60,23 @@ const MainProfile = (props) => {
           <div className="u-large">Followers: {props.user.followers}</div>
           <div className="u-large">Following: {props.user.following}</div>
         </div>
-        <div>Net Worth: {props.user.networth} VC</div>
-        <div>Gallery: {props.user.art_owned.length}</div>
-        <div>Logged in user: {props.curr_user_id}</div>
-        <div>IsFollowing: {!!props.isFollowing}|</div>
+        <div>
+          <div>Net Worth: {props.user.networth} VC</div>
+          <div>Gallery: {props.user.art_owned.length}</div>
+        </div>
         {props.curr_user_id &&
+          props.curr_user_id !== props.user._id &&
           (isFollowing ? (
-            <button onClick={UnFollowCheck}>Unfollow</button>
+            <button
+              className="MainProfile-UnfollowButton"
+              onClick={UnFollowCheck}
+            >
+              following
+            </button>
           ) : (
-            <button onClick={FollowCheck}>Follow</button>
+            <button className="MainProfile-FollowButton" onClick={FollowCheck}>
+              follow
+            </button>
           ))}
       </span>
     </div>
