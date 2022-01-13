@@ -90,6 +90,7 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const Art = require("./models/art");
+const Follow = require("./models/follow");
 
 // import authentication library
 const auth = require("./auth");
@@ -141,7 +142,42 @@ router.post("/art", (req, res) => {
     for_sale: req.body.for_sale,
     date_created: Date.now(),
   });
-  return art.save();
+  art.save().then((art) => {
+    res.send(art);
+  });
+});
+
+router.get("/follow", (req, res) => {
+  Follow.findOne(
+    {
+      follower_id: req.query.follower_id,
+      following_id: req.query.following_id,
+    },
+    (err, follow) => {
+      follow ? res.send(follow) : res.send([]);
+    }
+  );
+});
+
+router.post("/follow", (req, res) => {
+  const follow = new Follow({
+    follower_id: req.body.follower_id,
+    following_id: req.body.following_id,
+    _date: Date.now(),
+  });
+  //TODO: increment/decrement follower/following count for both users here and in /unfollow
+  follow.save().then((follow) => {
+    res.send(follow);
+  });
+});
+
+router.post("/unfollow", (req, res) => {
+  Follow.findOneAndDelete({
+    follower_id: req.body.follower_id,
+    following_id: req.body.following_id,
+  }).then((follow) => {
+    res.send(follow);
+  });
 });
 
 //! test routes only!
@@ -151,6 +187,10 @@ router.get("/users", (req, res) => {
 
 router.get("/arts", (req, res) => {
   Art.find({}).then((arts) => res.send(arts));
+});
+
+router.get("/follows", (req, res) => {
+  Follow.find({}).then((follows) => res.send(follows));
 });
 
 router.get("/sheesh", (req, res) => {

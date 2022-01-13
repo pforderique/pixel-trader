@@ -8,12 +8,15 @@ import "../../utilities.css";
 
 const Profile = (props) => {
   const [user, setUser] = useState(undefined);
+
   useEffect(() => {
     document.title = "PixelTrader: Profile";
+
+    // get profile information about this user
     get("/api/user", { user_id: props.userid }).then((u) => {
       setUser(u);
       console.log(
-        `Profile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
+        `User Logged in: ${props.curr_user_id}\nProfile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
       );
     });
   }, []);

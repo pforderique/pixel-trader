@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import { get, post } from "../../utilities.js";
 import noavatar from "../../public/noavatar.png";
 import "./MainProfile.css";
 import "../../utilities.css";
@@ -11,6 +12,43 @@ import "../../utilities.css";
  * @param {string} user of profile
  */
 const MainProfile = (props) => {
+  const [isFollowing, setFollowing] = useState(undefined);
+
+  useEffect(() => {
+    // check if logged in user follows this users profile
+    if (props.curr_user_id && props.curr_user_id !== props.user._id) {
+      get("/api/follow", {
+        follower_id: props.curr_user_id,
+        following_id: props.user._id,
+      }).then((follow) => {
+        !Array.isArray(follow) && setFollowing(true);
+      });
+    }
+  }, []);
+
+  const FollowCheck = (e) => {
+    e.preventDefault();
+    const body = {
+      follower_id: props.curr_user_id,
+      following_id: props.user._id,
+    };
+    console.log(body);
+    post("/api/follow", body).then((follow) => {
+      setFollowing(true);
+      console.log(`Current user just followed user ${props.user._id}`);
+    });
+  };
+  const UnFollowCheck = (e) => {
+    const body = {
+      follower_id: props.curr_user_id,
+      following_id: props.user._id,
+    };
+    post("/api/unfollow", body).then((follow) => {
+      setFollowing(false);
+      console.log(`Current user just UNfollowed user ${props.user._id}`);
+    });
+  };
+
   return (
     <div className="MainProfile-container">
       <span className="MainProfile-imageContainer">
@@ -24,9 +62,14 @@ const MainProfile = (props) => {
         </div>
         <div>Net Worth: {props.user.networth} VC</div>
         <div>Gallery: {props.user.art_owned.length}</div>
-        {props.curr_user_id && props.curr_user_id !== props.user._id && (
-          <div>Follow</div>
-        )}
+        <div>Logged in user: {props.curr_user_id}</div>
+        <div>IsFollowing: {!!props.isFollowing}|</div>
+        {props.curr_user_id &&
+          (isFollowing ? (
+            <button onClick={UnFollowCheck}>Unfollow</button>
+          ) : (
+            <button onClick={FollowCheck}>Follow</button>
+          ))}
       </span>
     </div>
   );
