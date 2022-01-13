@@ -6,7 +6,9 @@ import "./Explore.css";
 const Explore = (props) => {
   return (
     <>
-      <h1>Im a goofy goober</h1>
+      <div className="u-main-container u-transparent">
+        Welcome to the explore page ya filthy animal
+      </div>
     </>
   );
 };

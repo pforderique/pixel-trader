@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
+
+import Create from "./pages/Create.js";
 import Explore from "./pages/Explore.js";
 import NotFound from "./pages/NotFound.js";
+import Secret from "./pages/Secret.js";
 import Profile from "./pages/Profile.js";
 
 // import { socket } from "../client-socket.js";
@@ -46,10 +49,11 @@ const App = () => {
         handleLogout={handleLogout}
         curr_user_id={curr_user_id}
       />
-      <h1>Youre logged in with userid: {curr_user_id}</h1>
       <Router>
-        {/* <Explore path="/" curr_user_id={curr_user_id} /> */}
+        <Explore path="/" curr_user_id={curr_user_id} />
         <Profile path="/profile/:userid" curr_user_id={curr_user_id} />
+        {curr_user_id && <Create path="/create" curr_user_id={curr_user_id} />}
+        <Secret path="/secret" />
         <NotFound default />
       </Router>
     </>
