@@ -1,37 +1,35 @@
 .Create-main-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
+  flex-direction: row;
   text-align: center;
   align-items: center;
-}
-
-.Create-SidePanel {
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--l);
+  justify-content: space-evenly;
+  padding: var(--m);
+  flex-grow: 1 0;
 }
 
 .Create-GridBorder {
   background-color: rgb(19, 19, 19);
-  max-width: 700px;
+  /* max-width: ; */
+  min-width: 40vw;
 }
 
 .Create-Grid {
-  --size: 8;
+  --size: 10;
   display: grid;
   grid-gap: 2px;
-  grid-template-rows: repeat(var(--size), 1fr);
+  grid-template-rows: repeat(var(--size), 1fr) max-content;
   grid-template-columns: repeat(var(--size), 1fr);
 }
 
-.Create-Grid > div {
+.cell {
   /* border-radius: var(--xs); */
   background-color: white;
   padding-bottom: 100%;
   cursor: pointer;
 }
 
-.Create-Grid > div:hover {
+.cell:hover {
   background-color: rgb(230, 229, 229);
 }
 

@@ -26,6 +26,13 @@ const App = () => {
         setUserId(user._id);
       }
     });
+
+    // load in the icon js
+    const script = document.createElement("script");
+    script.src = "https://kit.fontawesome.com/ecfdf53d85.js";
+    script.async = true;
+
+    document.body.appendChild(script);
   }, []);
 
   const handleLogin = (res) => {
