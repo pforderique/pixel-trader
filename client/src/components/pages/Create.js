@@ -2,28 +2,56 @@ import React, { useEffect, useState } from "react";
 
 import { get, post } from "../../utilities.js";
 
+import "./Create.css";
 import "../../utilities.css";
 
 const Create = (props) => {
-  //   const [user, setUser] = useState(undefined);
+  // pixel grid properties
+  const SIZE = 8; // SIZExSIZE grid
+  const [onDraw, setDraw] = useState(true);
+  const [color, setColor] = useState("#000000");
 
-  //   useEffect(() => {
-  //     document.title = "PixelTrader: Create";
+  let mousePressed = 0;
+  document.body.onmousedown = () => {
+    ++mousePressed;
+  };
+  document.body.onmouseup = () => {
+    --mousePressed;
+  };
 
-  //     // get profile information about this user
-  //     get("/api/user", { user_id: props.userid }).then((u) => {
-  //       setUser(u);
-  //       console.log(
-  //         `User Logged in: ${props.curr_user_id}\nProfile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
-  //       );
-  //     });
-  //   }, []);
+  const fillColor = (e) => {
+    if (!mousePressed) return;
+    const cell = e.target;
+    cell.style.backgroundColor = color;
+  };
 
-  //   if (user === undefined) return <div>Log in to create.</div>;
+  const [pixels, setPixels] = useState(
+    [...Array(SIZE * SIZE).keys()].map((i) => (
+      <div
+        className="cell u-unselectable"
+        key={`key_${i}`}
+        onMouseDown={fillColor}
+        onMouseOver={fillColor}
+      ></div>
+    ))
+  );
 
   return (
     <>
-      <div className="u-main-container u-transparent">Hello bitches</div>
+      <div className="u-block u-main-container u-transparent">
+        Create:
+        <div className="Create-main-container">
+          <div className="Create-GridBorder">
+            <div className="Create-Grid">{pixels}</div>
+          </div>
+          <div className="Create-SidePanel">
+            Side Panel!
+            <button class="btn">Reset</button>
+            <input type="color" value="#00eeff" class="color"></input>
+            <input type="number" value="30" class="size"></input>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
