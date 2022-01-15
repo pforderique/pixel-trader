@@ -60,7 +60,14 @@ const Create = (props) => {
     console.log(pixelString.join(""));
     console.log(text);
     console.log(forSale);
-    //! now sumit this bastard!
+
+    const body = {
+      name: text,
+      pixels: pixelString.join(""),
+      for_sale: forSale,
+    };
+    post("/api/art", body).then((art) => console.log(art));
+    window.location.href = `/profile/${props.curr_user_id}`;
   };
 
   const handleTypeChange = (event) => {

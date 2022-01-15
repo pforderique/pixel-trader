@@ -131,10 +131,11 @@ router.get("/art", (req, res) => {
 });
 
 router.post("/art", (req, res) => {
+  // create new art
   const art = new Art({
-    creator_id: req.body.creator_id,
+    creator_id: req.user._id,
+    owner_id: req.user._id,
     name: req.body.name,
-    owner_id: req.body.owner_id,
     pixels: req.body.pixels,
     value: 0,
     likes: 0,
@@ -142,7 +143,14 @@ router.post("/art", (req, res) => {
     for_sale: req.body.for_sale,
     date_created: Date.now(),
   });
+
   art.save().then((art) => {
+    // update creator's art list and netowrth before sending
+    User.findOne({ _id: req.user._id }).then((user) => {
+      user.art_owned.push(art._id);
+      user.networth -= 1000;
+      user.save();
+    });
     res.send(art);
   });
 });
