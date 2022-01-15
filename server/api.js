@@ -85,7 +85,10 @@ const data = {
   },
 };
 
+const UPDATE_FREQ = 1000 * 60 * 2; // 2 min
+
 const express = require("express");
+const mongoose = require("mongoose");
 
 // import models so we can interact with the database
 const User = require("./models/user");
@@ -130,6 +133,27 @@ router.get("/art", (req, res) => {
   Art.findById(req.query.art_id).then((art) => res.send(art));
 });
 
+router.get("/arts", (req, res) => {
+  Art.find({
+    _id: {
+      $in: req.query.art_ids
+        .split(";")
+        .map((idd) => mongoose.Types.ObjectId(idd)),
+    },
+  }).then((result) => {
+    for (const art of result) {
+      if (Date.now() - art.date_updated > UPDATE_FREQ) {
+        Art.findById(art._id).then((a) => {
+          a.date_updated = Date.now();
+          a.last_value = a.value;
+          a.save();
+        });
+      }
+    }
+    res.send(result);
+  });
+});
+
 router.post("/art", (req, res) => {
   // create new art
   const art = new Art({
@@ -137,11 +161,13 @@ router.post("/art", (req, res) => {
     owner_id: req.user._id,
     name: req.body.name,
     pixels: req.body.pixels,
-    value: 0,
+    value: 1,
+    last_value: 1,
     likes: 0,
     views: 0,
     for_sale: req.body.for_sale,
     date_created: Date.now(),
+    date_updated: Date.now(),
   });
 
   art.save().then((art) => {
@@ -193,7 +219,7 @@ router.get("/users", (req, res) => {
   User.find({}).then((users) => res.send(users));
 });
 
-router.get("/arts", (req, res) => {
+router.get("/allarts", (req, res) => {
   Art.find({}).then((arts) => res.send(arts));
 });
 

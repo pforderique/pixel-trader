@@ -18,7 +18,7 @@ const Create = (props) => {
 
   useEffect(() => {
     document.title = "PixelTrader: Create";
-    get("/api/whoami").then((user) => {
+    get("/api/user", { user_id: props.curr_user_id }).then((user) => {
       setNetworth(user.networth);
     });
 
