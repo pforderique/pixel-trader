@@ -22,7 +22,7 @@ const SidePanel = (props) => {
         </label>
         <div className="u-white-container SidePanel-bottom">
           <div className="SidePanel-disclaimer">
-            Current Networth: {props.networth} VC
+            Networth: {props.networth} VC
           </div>
           <button
             className="SidePanel-btn"
@@ -41,6 +41,14 @@ const SidePanel = (props) => {
             Price: {PRICE_TO_CREATE} VC
           </div>
         </div>
+        <label className="SidePanel-toggleSection">
+          For Sale?
+          <input
+            type="checkbox"
+            checked={props.selling}
+            onChange={props.onToggle}
+          />
+        </label>
       </div>
     </>
   );

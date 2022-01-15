@@ -58,3 +58,11 @@
 .SidePanel-disclaimer {
   font-size: medium;
 }
+
+.SidePanel-toggleSection {
+  position: relative;
+  top: var(--m);
+  font-size: 1em;
+  border-radius: var(--s);
+  max-width: 30vw;
+}

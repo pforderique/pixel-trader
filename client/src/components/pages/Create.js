@@ -11,6 +11,7 @@ const Create = (props) => {
   const SIZE = 12; // SIZExSIZE grid
   const [userNetworth, setNetworth] = useState(null);
   const [text, setText] = useState("");
+  const [forSale, setForSale] = useState(true);
   const [color, setColor] = useState("#000000");
 
   let mousePressed = 0;
@@ -58,12 +59,17 @@ const Create = (props) => {
     }
     console.log(pixelString.join(""));
     console.log(text);
+    console.log(forSale);
     //! now sumit this bastard!
   };
 
-  const handleChange = (event) => {
+  const handleTypeChange = (event) => {
     if (event.target.value.length > 24) return;
     setText(event.target.value);
+  };
+
+  const handleToggle = (event) => {
+    setForSale(!forSale);
   };
 
   return (
@@ -76,8 +82,10 @@ const Create = (props) => {
           <SidePanel
             textvalue={text}
             networth={userNetworth}
-            onChange={handleChange}
+            selling={forSale}
+            onChange={handleTypeChange}
             onCreate={onSubmit}
+            onToggle={handleToggle}
           />
         </div>
       </div>
