@@ -6,47 +6,41 @@ import "./SidePanel.css";
 import "../../utilities.css";
 
 const SidePanel = (props) => {
-  const onPen = () => {
-    props.changeDraw(true);
-  };
-
-  const onEraser = () => {
-    props.changeDraw(false);
-  };
+  const PRICE_TO_CREATE = 1000;
   return (
     <>
-      <div className="ToolSelector-container">
-        Side Panel!
-        <button class="btn" onClick={props.onCreate}>
-          Create
-        </button>
-        {/* <input
-          type="color"
-          onChange={props.onPick}
-          value={props.currcolor}
-          class="color"
-        ></input> */}
-        {/* <input type="number" value="30" class="size"></input> */}
-        {/* <div>
+      <div className="SidePanel-container">
+        <label className="SidePanel-TextField">
+          <div className="u-xlarge">Title:</div>
           <input
-            id="pen"
-            type="radio"
-            name="test"
-            value="small"
-            checked="true"
-            onClick={onPen}
-          ></input>
-          <i class="fas fa-pen fa-2x"></i>
-          <input
-            id="eraser"
-            type="radio"
-            name="test"
-            value="small"
-            checked="false"
-            onClick={onEraser}
-          ></input>
-          <i class="fas fa-eraser fa-2x"></i>
-        </div> */}
+            className="SidePanel-Input"
+            type="text"
+            onChange={props.onChange}
+            value={props.textvalue}
+            placeholder="name your creation"
+          />
+        </label>
+        <div className="u-white-container SidePanel-bottom">
+          <div className="SidePanel-disclaimer">
+            Current Networth: {props.networth} VC
+          </div>
+          <button
+            className="SidePanel-btn"
+            disabled={
+              !(
+                props.textvalue.length >= 3 &&
+                props.networth &&
+                props.networth >= PRICE_TO_CREATE
+              )
+            }
+            onClick={props.onCreate}
+          >
+            Create
+          </button>
+          <div className="SidePanel-disclaimer">
+            Price: {PRICE_TO_CREATE} VC
+          </div>
+        </div>
       </div>
     </>
   );

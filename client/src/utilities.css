@@ -60,6 +60,12 @@ form {
   border-radius: var(--l);
 }
 
+.u-white-container {
+  background-color: var(--white);
+  padding: var(--m);
+  border-radius: var(--l);
+}
+
 .u-transparent {
   opacity: 0.7;
 }

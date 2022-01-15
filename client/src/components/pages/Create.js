@@ -2,33 +2,36 @@ import React, { useEffect, useState } from "react";
 
 import { get, post } from "../../utilities.js";
 
-import logo from "../../public/logosmall.png";
 import "./Create.css";
 import "../../utilities.css";
 import SidePanel from "../modules/SidePanel.js";
-// import { ChromePicker } from "react-color"
 
 const Create = (props) => {
   // pixel grid properties
-  const SIZE = 10; // SIZExSIZE grid
-  const [onDraw, setDraw] = useState(true);
+  const SIZE = 12; // SIZExSIZE grid
+  const [userNetworth, setNetworth] = useState(null);
+  const [text, setText] = useState("");
   const [color, setColor] = useState("#000000");
+
   let mousePressed = 0;
 
-  document.body.onmousedown = () => {
-    ++mousePressed;
-  };
-  document.body.onmouseup = () => {
-    --mousePressed;
-  };
+  useEffect(() => {
+    document.title = "PixelTrader: Create";
+    get("/api/whoami").then((user) => {
+      setNetworth(user.networth);
+    });
+
+    document.body.onmousedown = () => {
+      ++mousePressed;
+    };
+    document.body.onmouseup = () => {
+      --mousePressed;
+    };
+  }, []);
 
   const fillColor = (e) => {
     if (!mousePressed) return;
-    const cell = e.target;
-    let new_color = onDraw ? color : "white";
-    console.log(new_color);
-    cell.style.backgroundColor = new_color;
-    cell.color = new_color;
+    e.target.style.backgroundColor = color;
   };
 
   const [pixels, setPixels] = useState(
@@ -39,9 +42,7 @@ const Create = (props) => {
         key={`key_${i}`}
         onMouseDown={fillColor}
         onMouseOver={fillColor}
-      >
-        {" "}
-      </div>
+      ></div>
     ))
   );
 
@@ -55,7 +56,14 @@ const Create = (props) => {
           : "1"
       );
     }
-    console.log(pixelString.join(";"));
+    console.log(pixelString.join(""));
+    console.log(text);
+    //! now sumit this bastard!
+  };
+
+  const handleChange = (event) => {
+    if (event.target.value.length > 24) return;
+    setText(event.target.value);
   };
 
   return (
@@ -65,7 +73,12 @@ const Create = (props) => {
           <div className="Create-GridBorder">
             <div className="Create-Grid">{pixels}</div>
           </div>
-          <SidePanel onCreate={onSubmit} />
+          <SidePanel
+            textvalue={text}
+            networth={userNetworth}
+            onChange={handleChange}
+            onCreate={onSubmit}
+          />
         </div>
       </div>
     </>

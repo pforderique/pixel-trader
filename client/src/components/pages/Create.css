@@ -3,22 +3,21 @@
   flex-direction: row;
   text-align: center;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding: var(--m);
-  flex-grow: 1 0;
+  flex-wrap: wrap;
 }
 
 .Create-GridBorder {
   background-color: rgb(19, 19, 19);
-  /* max-width: ; */
   min-width: 40vw;
 }
 
 .Create-Grid {
-  --size: 10;
+  --size: 12;
   display: grid;
   grid-gap: 2px;
-  grid-template-rows: repeat(var(--size), 1fr) max-content;
+  grid-template-rows: repeat(var(--size), 1fr);
   grid-template-columns: repeat(var(--size), 1fr);
 }
 
