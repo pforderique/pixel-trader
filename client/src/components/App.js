@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 
+import ArtPage from "./pages/ArtPage.js";
 import Create from "./pages/Create.js";
 import Explore from "./pages/Explore.js";
 import NotFound from "./pages/NotFound.js";
@@ -60,6 +61,7 @@ const App = () => {
         <Explore path="/" curr_user_id={curr_user_id} />
         <Profile path="/profile/:userid" curr_user_id={curr_user_id} />
         {curr_user_id && <Create path="/create" curr_user_id={curr_user_id} />}
+        <ArtPage path="/art/:artid" />
         <Secret path="/secret" />
         <NotFound default />
       </Router>

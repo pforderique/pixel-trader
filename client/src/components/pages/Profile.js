@@ -19,7 +19,7 @@ const Profile = (props) => {
 
       u.art_owned.length !== 0 &&
         get("/api/arts", { art_ids: u.art_owned.join(";") }).then((arts) =>
-          setArts(arts)
+          setArts(arts.reverse())
         );
 
       console.log(

@@ -6,8 +6,7 @@ import "./PixelDisplay.css";
 const PixelDisplay = (props) => {
   const createPixel = (pixel, idx) => {
     const color = pixel === "1" ? "white" : "black";
-    const Opcolor = pixel === "1" ? "black" : "white";
-    const style = { backgroundColor: color, color: Opcolor };
+    const style = { backgroundColor: color };
     return (
       <div
         key={`pixel_${idx}`}
@@ -16,9 +15,13 @@ const PixelDisplay = (props) => {
       ></div>
     );
   };
+
   return (
     <>
-      <div className="PixelDisplay-container">
+      <div
+        className="PixelDisplay-container"
+        onClick={() => (window.location.href = `/art/${props.artid}`)}
+      >
         {props.pixels.split("").map(createPixel)}
       </div>
     </>

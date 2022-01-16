@@ -15,7 +15,7 @@ const ArtBlock = (props) => {
     <>
       <div className="ArtBlock-container">
         <div className="u-large">{props.art.name}</div>
-        <PixelDisplay pixels={props.art.pixels} />
+        <PixelDisplay artid={props.art._id} pixels={props.art.pixels} />
         <div className="ArtBlock-headline1">
           <div>{props.art.for_sale ? "For Sale" : "Not For Sale"}</div>
           <div>{`Likes: ${props.art.likes}`}</div>
