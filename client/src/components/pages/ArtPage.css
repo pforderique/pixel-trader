@@ -1,0 +1,29 @@
+.ArtPage-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+
+  align-items: center;
+}
+
+.ArtPage-title {
+  color: var(--white);
+  background-color: var(--primary--darkestest);
+
+  width: fit-content;
+  padding: var(--s) var(--m);
+  border-radius: var(--m);
+}
+
+.ArtPage-subcontainer {
+  display: flex;
+  align-items: center;
+
+  margin: var(--l) 0;
+}
+
+@media screen and (max-width: 820px) {
+  .ArtPage-subcontainer {
+    flex-direction: column;
+  }
+}

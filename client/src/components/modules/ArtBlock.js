@@ -1,16 +1,13 @@
 import React from "react";
+import { getPercentChange } from "../../utilities.js";
 
 import PixelDisplay from "./PixelDisplay";
 import "../../utilities.css";
 import "./ArtBlock.css";
 
 const ArtBlock = (props) => {
-  const percentChange =
-    ((props.art.value - props.art.last_value) * 100) / props.art.last_value;
-  if (percentChange !== 0) {
-    if (percentChange < 0) percentChange = "-" + percentChange.toString();
-    else percentChange = "+" + percentChange.toString();
-  }
+  const percentChange = getPercentChange(props.art);
+
   return (
     <>
       <div className="ArtBlock-container">

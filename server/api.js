@@ -85,7 +85,7 @@ const data = {
   },
 };
 
-const UPDATE_FREQ = 1000 * 60 * 2; // 2 min
+const UPDATE_FREQ = 1000 * 60 * 1; // 1 min
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -130,7 +130,17 @@ router.get("/user", (req, res) => {
 });
 
 router.get("/art", (req, res) => {
-  Art.findById(req.query.art_id).then((art) => res.send(art));
+  Art.findById(req.query.art_id)
+    .then((art) => {
+      if (Date.now() - art.date_updated > UPDATE_FREQ) {
+        art.date_updated = Date.now();
+        art.last_value = art.value;
+        art.save().then((art) => res.send(art));
+      } else {
+        res.send(art);
+      }
+    })
+    .catch((err) => res.send({ _id: null }));
 });
 
 router.get("/arts", (req, res) => {
@@ -211,6 +221,14 @@ router.post("/unfollow", (req, res) => {
     following_id: req.body.following_id,
   }).then((follow) => {
     res.send(follow);
+  });
+});
+
+router.post("/art/increment", (req, res) => {
+  Art.findById(req.body.art_id).then((a) => {
+    a.views += Number(req.body.views);
+    a.value += Number(req.body.value);
+    a.save().then((a) => res.send(a));
   });
 });
 

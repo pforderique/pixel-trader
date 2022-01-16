@@ -19,6 +19,7 @@
 @import url("https://kit.fontawesome.com/ecfdf53d85.js");
 
 :root {
+  --primary--darkestest: #182f31;
   --primary--darkest: #2f5d62;
   --primary--dark: #5e8b7e;
   --primary--light: #a7c4bc;

@@ -6,7 +6,7 @@
   grid-template-columns: repeat(var(--gridsize), 1fr);
   cursor: pointer;
 
-  width: 16vw;
+  /* width: 16vw; */
 }
 
 .PixelDisplay-Pixel:after {
