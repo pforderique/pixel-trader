@@ -253,6 +253,19 @@ router.post("/art/purchase", (req, res) => {
   });
 });
 
+router.get("/art/trending", (req, res) => {
+  const count = req.query.count ? Number(req.query.count) : 6;
+
+  // return {count} "trending" art
+  // trending measured by views for now
+  Art.find({})
+    .sort({ views: -1 })
+    .limit(count)
+    .then((results) => {
+      res.send(results);
+    });
+});
+
 router.get("/search", (req, res) => {
   // use regex to search for alike documents
   const query = { name: { $regex: ".*" + req.query.q + ".*", $options: "i" } };

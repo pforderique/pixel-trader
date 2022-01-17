@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
+import SearchBar from "../modules/SearchBar";
 import "../../utilities.css";
 import "./Explore.css";
 
 const Explore = (props) => {
-  const [text, setText] = useState("");
+  const [searchtext, setText] = useState("");
+  const [results, setResults] = useState(undefined);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleTypeChange = (event) => {
     if (event.target.value.length > 24) return;
@@ -14,7 +17,7 @@ const Explore = (props) => {
   return (
     <>
       <div className="u-main-container u-transparent">
-        Welcome to the explore page ya filthy animal
+        <SearchBar onChange={handleTypeChange} textvalue={searchtext} />
       </div>
     </>
   );

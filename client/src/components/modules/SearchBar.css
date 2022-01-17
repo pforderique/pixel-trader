@@ -1,0 +1,34 @@
+.SearchBar-container {
+  display: flex;
+  align-items: center;
+  font-size: 2vmax;
+}
+
+.SearchBar-searchLabel {
+  padding: var(--s) var(--m);
+
+  background-color: var(--primary--darkestest);
+  color: white;
+
+  border-radius: var(--m) 0 0 var(--m);
+}
+
+.SearchBar-Input {
+  padding: var(--s) var(--m);
+
+  font-size: 2vmax;
+  border: none;
+  /* max-width: 30vw; */
+}
+
+.SearchBar-icon {
+  background-color: var(--primary--darkestest);
+  color: white;
+  border-radius: 0 var(--s) var(--s) 0;
+  padding: 10px;
+}
+
+.SearchBar-icon:hover {
+  cursor: pointer;
+  background-color: var(--primary--darkest);
+}
