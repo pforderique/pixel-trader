@@ -21,15 +21,10 @@ const MainProfile = (props) => {
         follower_id: props.curr_user._id,
         following_id: props.user._id,
       }).then((follow) => {
-        console.log(follow);
-        follow._id && setFollowing(true);
+        follow._id ? setFollowing(true) : setFollowing(false);
       });
     }
   }, []);
-
-  useEffect(() => {
-    console.log(isFollowing);
-  }, [isFollowing]);
 
   const FollowCheck = (e) => {
     e.preventDefault();
@@ -40,7 +35,6 @@ const MainProfile = (props) => {
     post("/api/follow", body).then((user_followed) => {
       setFollowing(true);
       props.updateUser(user_followed);
-      console.log(`Current user just followed user ${props.user._id}`);
     });
   };
 
@@ -49,9 +43,9 @@ const MainProfile = (props) => {
       follower_id: props.curr_user._id,
       following_id: props.user._id,
     };
-    post("/api/unfollow", body).then((follow) => {
+    post("/api/unfollow", body).then((user_unfollowed) => {
       setFollowing(false);
-      console.log(`Current user just UNfollowed user ${props.user._id}`);
+      props.updateUser(user_unfollowed);
     });
   };
 
@@ -72,6 +66,7 @@ const MainProfile = (props) => {
         </div>
         {props.curr_user._id &&
           props.curr_user._id !== props.user._id &&
+          isFollowing !== undefined &&
           (isFollowing ? (
             <button
               className="MainProfile-UnfollowButton"

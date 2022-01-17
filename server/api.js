@@ -129,22 +129,20 @@ router.post("/follow", (req, res) => {
     following_id: req.body.following_id,
     _date: Date.now(),
   });
-  //TODO: increment/decrement follower/following count for both users here and in /unfollow
   follow.save();
 
   // increment following count on follower user
-  User.findByIdAndUpdate(
-    req.body.follower_id,
-    { $inc: { following: 1 } },
-    (e, u) => {}
-  );
+  User.findByIdAndUpdate(req.body.follower_id, {
+    $inc: { following: 1 },
+  }).exec();
 
   // increment follower count on followed user
   User.findByIdAndUpdate(
     req.body.following_id,
     { $inc: { followers: 1 } },
-    (e, u) => {
-      res.send(u);
+    { new: true }, // return the updated user instead
+    (e, user) => {
+      res.send(user);
     }
   );
 });
@@ -153,9 +151,22 @@ router.post("/unfollow", (req, res) => {
   Follow.findOneAndDelete({
     follower_id: req.body.follower_id,
     following_id: req.body.following_id,
-  }).then((follow) => {
-    res.send(follow);
-  });
+  }).exec();
+
+  // decrement following count on follower user
+  User.findByIdAndUpdate(req.body.follower_id, {
+    $inc: { following: -1 },
+  }).exec();
+
+  // decrement follower count on followed user
+  User.findByIdAndUpdate(
+    req.body.following_id,
+    { $inc: { followers: -1 } },
+    { new: true }, // return the updated user instead
+    (e, user) => {
+      res.send(user);
+    }
+  );
 });
 
 router.get("/like", (req, res) => {
