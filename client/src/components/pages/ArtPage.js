@@ -13,20 +13,23 @@ const ArtPage = (props) => {
   const [owner, setOwner] = useState(undefined);
   const [creator, setCreator] = useState(undefined);
   const [percentChange, setChange] = useState(undefined);
+  const [isLiked, setLiked] = useState(undefined);
 
   const style = { width: "35vw" };
 
   useEffect(() => {
+    // get information on this art piece
     get("/api/art", { art_id: props.artid }).then((a) => {
       if (!a._id) setArt(null);
       else {
-        setArt(a);
-        setChange(getPercentChange(a));
         document.title = `PixelTrader | ${a.name}`;
 
         // increment view and value by 1 on each GET req to an art
         const body = { art_id: a._id, value: 1, views: 1 };
-        post("/api/art/increment", body);
+        post("/api/art/increment", body).then((updated_art) => {
+          setArt(updated_art);
+          setChange(getPercentChange(updated_art));
+        });
 
         // get owner and creator names for display
         get("/api/user", { user_id: a.owner_id }).then((o) => setOwner(o.name));
@@ -36,6 +39,57 @@ const ArtPage = (props) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    // check if user has liked this piece of art
+    props.curr_user_id &&
+      get("/api/like", {
+        user_id: props.curr_user_id,
+        art_id: props.artid,
+      }).then((like) => {
+        if (like._id) setLiked(true);
+      });
+  }, [props.curr_user_id]);
+
+  const onPurchase = () => {
+    console.log("purchased!");
+    console.log(props.curr_user_id, art.owner_id);
+  };
+
+  const onDelete = () => {
+    console.log("deleting art!");
+  };
+
+  const onLike = () => {
+    console.log("liked!");
+    setLiked(true);
+    // add like object
+    const body = { user_id: props.curr_user_id, art_id: art._id };
+    post("/api/like", body).then((a) => {
+      // increment value by 10
+      post("/api/art/increment", { art_id: a._id, value: 10, views: 0 }).then(
+        (artres) => {
+          setArt(artres);
+          setChange(getPercentChange(artres));
+        }
+      );
+    });
+  };
+
+  const onUnlike = () => {
+    console.log("unliked!");
+    setLiked(false);
+    const body = { user_id: props.curr_user_id, art_id: art._id };
+    post("/api/unlike", body).then((a) => {
+      // decrement value by 10
+      post("/api/art/increment", { art_id: a._id, value: -10, views: 0 }).then(
+        (artres) => {
+          setArt(artres);
+          setChange(getPercentChange(artres));
+        }
+      );
+    });
+  };
 
   if (art === undefined) return <div>Loading...</div>;
   if (art === null) return <div>Could not find art.</div>;
@@ -55,6 +109,12 @@ const ArtPage = (props) => {
             creator={creator}
             art={art}
             percentChange={percentChange}
+            onPurchase={onPurchase}
+            onDelete={onDelete}
+            onUnlike={onUnlike}
+            onLike={onLike}
+            isLiked={isLiked}
+            curr_user_id={props.curr_user_id}
           />
         </div>
       </div>

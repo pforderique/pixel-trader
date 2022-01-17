@@ -61,7 +61,7 @@ const App = () => {
         <Explore path="/" curr_user_id={curr_user_id} />
         <Profile path="/profile/:userid" curr_user_id={curr_user_id} />
         {curr_user_id && <Create path="/create" curr_user_id={curr_user_id} />}
-        <ArtPage path="/art/:artid" />
+        <ArtPage path="/art/:artid" curr_user_id={curr_user_id} />
         <Secret path="/secret" />
         <NotFound default />
       </Router>

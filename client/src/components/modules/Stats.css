@@ -6,6 +6,10 @@
   margin: 0 12vw;
 }
 
+.Stats-stats > div:nth-child(odd) {
+  margin-top: 1vw;
+}
+
 @media screen and (max-width: 820px) {
   .Stats-container {
     margin-top: 2vh;

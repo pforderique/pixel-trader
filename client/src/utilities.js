@@ -66,8 +66,8 @@ export function getPercentChange(art) {
   let percentChange = ((art.value - art.last_value) * 100) / art.last_value;
   percentChange = Math.round(percentChange * 100) / 100; // round to 2 decimals
   if (percentChange !== 0) {
-    if (percentChange < 0) percentChange = "-" + percentChange.toString();
-    else percentChange = "+" + percentChange.toString();
+    if (percentChange > 0) percentChange = "+" + percentChange.toString();
+    else percentChange = percentChange.toString();
   }
   return percentChange;
 }

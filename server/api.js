@@ -91,9 +91,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 // import models so we can interact with the database
-const User = require("./models/user");
 const Art = require("./models/art");
 const Follow = require("./models/follow");
+const Like = require("./models/like");
+const User = require("./models/user");
 
 // import authentication library
 const auth = require("./auth");
@@ -221,6 +222,45 @@ router.post("/unfollow", (req, res) => {
     following_id: req.body.following_id,
   }).then((follow) => {
     res.send(follow);
+  });
+});
+
+router.get("/like", (req, res) => {
+  Like.findOne({
+    user_id: req.query.user_id,
+    art_id: req.query.art_id,
+  }).then((like) => {
+    like ? res.send(like) : res.send({ _id: null });
+  });
+});
+
+router.post("/like", (req, res) => {
+  // create new like object
+  const newLike = new Like({
+    user_id: req.body.user_id,
+    art_id: req.body.art_id,
+    _date: Date.now(),
+  });
+
+  newLike.save();
+
+  // update like count on post
+  Art.findById(req.body.art_id).then((art) => {
+    art.likes += 1;
+    art.save().then((a) => res.send(a));
+  });
+});
+
+router.post("/unlike", (req, res) => {
+  Like.findOneAndDelete({
+    user_id: req.body.user_id,
+    art_id: req.body.art_id,
+  }).then((follow) => {
+    // update like count on post
+    Art.findById(req.body.art_id).then((art) => {
+      art.likes -= 1;
+      art.save().then((a) => res.send(a));
+    });
   });
 });
 
