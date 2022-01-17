@@ -8,7 +8,7 @@ import SidePanel from "../modules/SidePanel.js";
 
 const Create = (props) => {
   // pixel grid properties
-  const SIZE = 12; // SIZExSIZE grid
+  const SIZE = 16; // SIZExSIZE grid
   const [userNetworth, setNetworth] = useState(null);
   const [text, setText] = useState("");
   const [forSale, setForSale] = useState(true);

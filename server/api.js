@@ -282,7 +282,9 @@ router.post("/art/delete", (req, res) => {
       user.art_owned.splice(idx, 1);
       user.save();
     });
-    res.send(a);
+
+    // remove all likes the post had in the database
+    Like.deleteMany({ art_id: a._id.toString() }).then((mes) => res.send(mes));
   });
 });
 

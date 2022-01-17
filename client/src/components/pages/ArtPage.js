@@ -64,23 +64,11 @@ const ArtPage = (props) => {
   };
 
   const onDelete = () => {
-    console.log("deleting art!", props.curr_user._id);
-    // remove the like object (if exists)
-    if (isLiked) {
-      post("/api/unlike", {
-        user_id: props.curr_user._id,
-        art_id: props.artid,
-      }).then((a) => {
-        // remove the art object
-        post("/api/art/delete", { art_id: props.artid }).then((a) => {
-          window.location.href = `/profile/${props.curr_user._id}`;
-        });
-      });
-    } else {
-      post("/api/art/delete", { art_id: props.artid }).then((a) => {
-        window.location.href = `/profile/${props.curr_user._id}`;
-      });
-    }
+    console.log("deleting art!", props.artid);
+    post("/api/art/delete", { art_id: props.artid }).then((res) => {
+      window.location.href = `/profile/${props.curr_user._id}`;
+      console.log(res);
+    });
   };
 
   const onLike = () => {
