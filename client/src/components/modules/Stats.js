@@ -5,7 +5,6 @@ import "./Stats.css";
 
 const Stats = (props) => {
   return (
-    //TODO: render delete or purchase button! start by checking currid != art.owner_id
     <>
       <div className="Stats-container">
         <div className="u-xlarge u-textCenter">Stats</div>
