@@ -44,6 +44,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     dbName: databaseName,
+    useFindAndModify: false, // useFindAndModify is deprecated
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(`Error connecting to MongoDB: ${err}`));

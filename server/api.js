@@ -45,9 +45,7 @@ router.get("/whoami", (req, res) => {
 //   res.send({});
 // });
 
-// |------------------------------|
-// | write your API methods below!|
-// |------------------------------|
+// API methods
 router.get("/user", (req, res) => {
   User.findById(req.query.user_id)
     .then((user) => res.send(user))
@@ -117,15 +115,12 @@ router.post("/art", (req, res) => {
 });
 
 router.get("/follow", (req, res) => {
-  Follow.findOne(
-    {
-      follower_id: req.query.follower_id,
-      following_id: req.query.following_id,
-    },
-    (err, follow) => {
-      follow ? res.send(follow) : res.send([]);
-    }
-  );
+  Follow.findOne({
+    follower_id: req.query.follower_id,
+    following_id: req.query.following_id,
+  }).then((follow) => {
+    follow ? res.send(follow) : res.send({ _id: null });
+  });
 });
 
 router.post("/follow", (req, res) => {
@@ -135,9 +130,23 @@ router.post("/follow", (req, res) => {
     _date: Date.now(),
   });
   //TODO: increment/decrement follower/following count for both users here and in /unfollow
-  follow.save().then((follow) => {
-    res.send(follow);
-  });
+  follow.save();
+
+  // increment following count on follower user
+  User.findByIdAndUpdate(
+    req.body.follower_id,
+    { $inc: { following: 1 } },
+    (e, u) => {}
+  );
+
+  // increment follower count on followed user
+  User.findByIdAndUpdate(
+    req.body.following_id,
+    { $inc: { followers: 1 } },
+    (e, u) => {
+      res.send(u);
+    }
+  );
 });
 
 router.post("/unfollow", (req, res) => {

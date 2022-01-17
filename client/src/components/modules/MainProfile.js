@@ -21,10 +21,15 @@ const MainProfile = (props) => {
         follower_id: props.curr_user._id,
         following_id: props.user._id,
       }).then((follow) => {
-        !Array.isArray(follow) && setFollowing(true);
+        console.log(follow);
+        follow._id && setFollowing(true);
       });
     }
   }, []);
+
+  useEffect(() => {
+    console.log(isFollowing);
+  }, [isFollowing]);
 
   const FollowCheck = (e) => {
     e.preventDefault();
@@ -32,12 +37,13 @@ const MainProfile = (props) => {
       follower_id: props.curr_user._id,
       following_id: props.user._id,
     };
-    console.log(body);
-    post("/api/follow", body).then((follow) => {
+    post("/api/follow", body).then((user_followed) => {
       setFollowing(true);
+      props.updateUser(user_followed);
       console.log(`Current user just followed user ${props.user._id}`);
     });
   };
+
   const UnFollowCheck = (e) => {
     const body = {
       follower_id: props.curr_user._id,

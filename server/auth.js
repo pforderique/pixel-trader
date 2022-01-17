@@ -28,8 +28,8 @@ function getOrCreateUser(user) {
       googleid: user.sub,
       art_owned: [],
       networth: 30000,
-      following: 514,
-      followers: 365,
+      following: 0,
+      followers: 0,
       profile_pic: null,
       date_joined: Date.now(),
     });
