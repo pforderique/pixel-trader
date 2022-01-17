@@ -15,7 +15,10 @@ const SearchBar = (props) => {
           value={props.textvalue}
           placeholder="user or art name"
         />
-        <i className="fas fa-search SearchBar-icon"></i>
+        <i
+          className="fas fa-search SearchBar-icon"
+          onClick={props.onSubmit}
+        ></i>
       </div>
     </>
   );
