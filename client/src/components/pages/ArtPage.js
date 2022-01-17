@@ -42,30 +42,46 @@ const ArtPage = (props) => {
 
   useEffect(() => {
     // check if user has liked this piece of art
-    props.curr_user_id &&
+    props.curr_user._id &&
       get("/api/like", {
-        user_id: props.curr_user_id,
+        user_id: props.curr_user._id,
         art_id: props.artid,
       }).then((like) => {
         if (like._id) setLiked(true);
         else setLiked(false);
       });
-  }, [props.curr_user_id]);
+  }, [props.curr_user]);
 
   const onPurchase = () => {
     console.log("purchased!");
-    console.log(props.curr_user_id, art.owner_id);
+    console.log(props.curr_user._id, art.owner_id);
   };
 
   const onDelete = () => {
-    console.log("deleting art!");
+    console.log("deleting art!", props.curr_user._id);
+    // remove the like object (if exists)
+    if (isLiked) {
+      post("/api/unlike", {
+        user_id: props.curr_user._id,
+        art_id: props.artid,
+      }).then((a) => {
+        // remove the art object
+        post("/api/art/delete", { art_id: props.artid }).then((a) => {
+          window.location.href = `/profile/${props.curr_user._id}`;
+        });
+      });
+    } else {
+      post("/api/art/delete", { art_id: props.artid }).then((a) => {
+        window.location.href = `/profile/${props.curr_user._id}`;
+      });
+    }
   };
 
   const onLike = () => {
     console.log("liked!");
     setLiked(true);
     // add like object
-    const body = { user_id: props.curr_user_id, art_id: art._id };
+    const body = { user_id: props.curr_user._id, art_id: art._id };
     post("/api/like", body).then((a) => {
       // increment value by 10
       post("/api/art/increment", { art_id: a._id, value: 10, views: 0 }).then(
@@ -80,7 +96,7 @@ const ArtPage = (props) => {
   const onUnlike = () => {
     console.log("unliked!");
     setLiked(false);
-    const body = { user_id: props.curr_user_id, art_id: art._id };
+    const body = { user_id: props.curr_user._id, art_id: art._id };
     post("/api/unlike", body).then((a) => {
       // decrement value by 10
       post("/api/art/increment", { art_id: a._id, value: -10, views: 0 }).then(
@@ -115,7 +131,7 @@ const ArtPage = (props) => {
             onUnlike={onUnlike}
             onLike={onLike}
             isLiked={isLiked}
-            curr_user_id={props.curr_user_id}
+            curr_user={props.curr_user}
           />
         </div>
       </div>

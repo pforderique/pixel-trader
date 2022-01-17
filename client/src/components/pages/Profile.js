@@ -23,7 +23,7 @@ const Profile = (props) => {
         );
 
       console.log(
-        `User Logged in: ${props.curr_user_id}\nProfile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
+        `User Logged in: ${props.curr_user._id}\nProfile of user: ${u.name} with id ${props.userid} -- art owned: ${u.art_owned}`
       );
     });
   }, []);
@@ -33,11 +33,12 @@ const Profile = (props) => {
   }, [artObjs]);
 
   if (user === undefined) return <div>Loading...</div>;
+  if (!user._id) return <div>No user.</div>;
 
   return (
     <>
       <div className="u-main-container u-transparent">
-        <MainProfile user={user} curr_user_id={props.curr_user_id} />
+        <MainProfile user={user} curr_user={props.curr_user} />
         <ArtGrid title={"Gallery"} include_owner={false} arts={artObjs} />
       </div>
     </>

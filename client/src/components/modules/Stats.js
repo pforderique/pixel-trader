@@ -10,7 +10,7 @@ const Stats = (props) => {
       <div className="Stats-container">
         <div className="u-xlarge Stats-title">
           {props.art.name}
-          {props.curr_user_id &&
+          {props.curr_user._id &&
             props.isLiked !== undefined &&
             (props.isLiked ? (
               <i
@@ -32,7 +32,7 @@ const Stats = (props) => {
           <div>Date Created: {props.art.date_created.substring(0, 10)}</div>
         </div>
         <div className="Stats-button-container">
-          {props.curr_user_id && props.curr_user_id === props.art.owner_id ? (
+          {props.curr_user._id && props.curr_user._id === props.art.owner_id ? (
             <button className="Stats-delete" onClick={props.onDelete}>
               DELETE
             </button>

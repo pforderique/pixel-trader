@@ -127,7 +127,9 @@ router.get("/whoami", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 router.get("/user", (req, res) => {
-  User.findById(req.query.user_id).then((user) => res.send(user));
+  User.findById(req.query.user_id)
+    .then((user) => res.send(user))
+    .catch((err) => res.send({ _id: null }));
 });
 
 router.get("/art", (req, res) => {
@@ -270,6 +272,10 @@ router.post("/art/increment", (req, res) => {
     a.value += Number(req.body.value);
     a.save().then((a) => res.send(a));
   });
+});
+
+router.post("/art/delete", (req, res) => {
+  Art.findByIdAndDelete(req.body.art_id).then((a) => res.send(a));
 });
 
 //! test routes only!

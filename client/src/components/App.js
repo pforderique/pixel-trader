@@ -18,13 +18,13 @@ import "../utilities.css";
  * Define the "App" component
  */
 const App = () => {
-  const [curr_user_id, setUserId] = useState(undefined);
+  const [curr_user, setCurrUser] = useState({ _id: null });
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
-        setUserId(user._id);
+        setCurrUser(user);
       }
     });
 
@@ -40,13 +40,13 @@ const App = () => {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      setUserId(user._id);
+      setCurrUser(user);
       // post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   const handleLogout = () => {
-    setUserId(undefined);
+    setCurrUser({ _id: null });
     post("/api/logout");
   };
 
@@ -55,13 +55,13 @@ const App = () => {
       <NavBar
         handleLogin={handleLogin}
         handleLogout={handleLogout}
-        curr_user_id={curr_user_id}
+        curr_user={curr_user}
       />
       <Router>
-        <Explore path="/" curr_user_id={curr_user_id} />
-        <Profile path="/profile/:userid" curr_user_id={curr_user_id} />
-        {curr_user_id && <Create path="/create" curr_user_id={curr_user_id} />}
-        <ArtPage path="/art/:artid" curr_user_id={curr_user_id} />
+        <Explore path="/" curr_user={curr_user} />
+        <Profile path="/profile/:userid" curr_user={curr_user} />
+        {curr_user._id && <Create path="/create" curr_user={curr_user} />}
+        <ArtPage path="/art/:artid" curr_user={curr_user} />
         <Secret path="/secret" />
         <NotFound default />
       </Router>

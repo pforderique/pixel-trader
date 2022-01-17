@@ -16,9 +16,9 @@ const MainProfile = (props) => {
 
   useEffect(() => {
     // check if logged in user follows this users profile
-    if (props.curr_user_id && props.curr_user_id !== props.user._id) {
+    if (props.curr_user._id && props.curr_user._id !== props.user._id) {
       get("/api/follow", {
-        follower_id: props.curr_user_id,
+        follower_id: props.curr_user._id,
         following_id: props.user._id,
       }).then((follow) => {
         !Array.isArray(follow) && setFollowing(true);
@@ -29,7 +29,7 @@ const MainProfile = (props) => {
   const FollowCheck = (e) => {
     e.preventDefault();
     const body = {
-      follower_id: props.curr_user_id,
+      follower_id: props.curr_user._id,
       following_id: props.user._id,
     };
     console.log(body);
@@ -40,7 +40,7 @@ const MainProfile = (props) => {
   };
   const UnFollowCheck = (e) => {
     const body = {
-      follower_id: props.curr_user_id,
+      follower_id: props.curr_user._id,
       following_id: props.user._id,
     };
     post("/api/unfollow", body).then((follow) => {
@@ -64,8 +64,8 @@ const MainProfile = (props) => {
           <div>Net Worth: {props.user.networth} VC</div>
           <div>Gallery: {props.user.art_owned.length}</div>
         </div>
-        {props.curr_user_id &&
-          props.curr_user_id !== props.user._id &&
+        {props.curr_user._id &&
+          props.curr_user._id !== props.user._id &&
           (isFollowing ? (
             <button
               className="MainProfile-UnfollowButton"

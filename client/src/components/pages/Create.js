@@ -18,9 +18,7 @@ const Create = (props) => {
 
   useEffect(() => {
     document.title = "PixelTrader: Create";
-    get("/api/user", { user_id: props.curr_user_id }).then((user) => {
-      setNetworth(user.networth);
-    });
+    setNetworth(props.curr_user.networth);
 
     document.body.onmousedown = () => {
       ++mousePressed;
@@ -67,7 +65,7 @@ const Create = (props) => {
       for_sale: forSale,
     };
     post("/api/art", body).then((art) => console.log(art));
-    window.location.href = `/profile/${props.curr_user_id}`;
+    window.location.href = `/profile/${props.curr_user._id}`;
   };
 
   const handleTypeChange = (event) => {

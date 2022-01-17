@@ -58,7 +58,7 @@ form {
 
 .u-main-container {
   background-color: var(--primary--light);
-  padding: var(--m);
+  padding: var(--l);
   margin: var(--l);
   border-radius: var(--l);
 }
