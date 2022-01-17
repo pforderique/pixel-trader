@@ -254,24 +254,16 @@ router.post("/art/purchase", (req, res) => {
 });
 
 router.get("/search", (req, res) => {
-  const result = { users: [], arts: [] };
+  // use regex to search for alike documents
+  const query = { name: { $regex: ".*" + req.query.q + ".*", $options: "i" } };
 
-  // get similar users - option: i sets search as case insensitive
-  User.find({
-    name: { $regex: ".*" + req.query.q + ".*", $options: "i" },
-  })
-    .limit(6)
-    .then((users) => {
-      result.users = users;
-
-      // get similar art
-      Art.find({ name: { $regex: ".*" + req.query.q + ".*", $options: "i" } })
-        .limit(12)
-        .then((arts) => {
-          result.arts = arts;
-        })
-        .then((r) => res.send(result));
-    });
+  // wait for all asynchronous requests to complete before sending
+  Promise.all([
+    User.find(query).limit(6).exec(),
+    Art.find(query).limit(12).exec(),
+  ]).then((results) => {
+    res.send({ users: results[0], arts: results[1] });
+  });
 });
 
 //! test routes only!
