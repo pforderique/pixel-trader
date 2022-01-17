@@ -6,8 +6,55 @@
   margin: 0 12vw;
 }
 
+.Stats-title {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .Stats-stats > div:nth-child(odd) {
   margin-top: 1vw;
+}
+
+.Stats-like {
+  cursor: pointer;
+  color: black;
+}
+
+.Stats-unlike {
+  cursor: pointer;
+  color: red;
+}
+
+.Stats-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1vw;
+}
+
+.Stats-delete {
+  color: white;
+  background-color: rgb(223, 0, 0);
+  border-radius: var(--m);
+  padding: var(--s) var(--m);
+  font-size: x-large;
+}
+
+.Stats-delete:hover {
+  background-color: rgb(150, 0, 0);
+  cursor: pointer;
+}
+
+.Stats-purchase {
+  color: white;
+  background-color: var(--primary--darkestest);
+  border-radius: var(--m);
+  padding: var(--s) var(--m);
+  font-size: x-large;
+}
+
+.Stats-purchase:hover {
+  background-color: var(--primary--darkest);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 820px) {

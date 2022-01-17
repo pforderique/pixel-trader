@@ -48,6 +48,7 @@ const ArtPage = (props) => {
         art_id: props.artid,
       }).then((like) => {
         if (like._id) setLiked(true);
+        else setLiked(false);
       });
   }, [props.curr_user_id]);
 

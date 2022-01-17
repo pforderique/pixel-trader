@@ -98,6 +98,10 @@ form {
   font-weight: 600;
 }
 
+.u-xxlarge {
+  font-size: xx-large;
+}
+
 .u-xlarge {
   font-size: x-large;
 }

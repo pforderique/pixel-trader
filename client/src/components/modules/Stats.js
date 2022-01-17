@@ -4,10 +4,23 @@ import "../../utilities.css";
 import "./Stats.css";
 
 const Stats = (props) => {
+  if (!props.art) return <div>Loading art...</div>;
   return (
     <>
       <div className="Stats-container">
-        <div className="u-xlarge u-textCenter">Stats</div>
+        <div className="u-xlarge Stats-title">
+          {props.art.name}
+          {props.curr_user_id &&
+            props.isLiked !== undefined &&
+            (props.isLiked ? (
+              <i
+                className="Stats-unlike fas fa-heart"
+                onClick={props.onUnlike}
+              ></i>
+            ) : (
+              <i className="Stats-like far fa-heart" onClick={props.onLike}></i>
+            ))}
+        </div>
         <div className="Stats-stats">
           <div>Owner: {props.owner}</div>
           <div>Status: {props.art.for_sale ? "For Sale" : "Not For Sale"}</div>
@@ -18,13 +31,17 @@ const Stats = (props) => {
           <div>Creator: {props.creator}</div>
           <div>Date Created: {props.art.date_created.substring(0, 10)}</div>
         </div>
-        {props.isLiked &&
-          (props.isLiked ? (
-            <button onClick={props.onUnlike}>Unlike</button>
+        <div className="Stats-button-container">
+          {props.curr_user_id && props.curr_user_id === props.art.owner_id ? (
+            <button className="Stats-delete" onClick={props.onDelete}>
+              DELETE
+            </button>
           ) : (
-            <button onClick={props.onLike}>Like</button>
-          ))}
-        <button onClick={props.onPurchase}>Purchase</button>
+            <button className="Stats-purchase" onClick={props.onPurchase}>
+              Purchase
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
