@@ -6,86 +6,8 @@
 | This file defines the routes for your server.
 |
 */
-const data = {
-  users: [
-    {
-      _id: 0,
-      username: "fabrizzioorderique", // unique!
-      googleid: "56",
-      posts: [0, 1],
-      networth: 1200,
-      following: 40,
-      followers: 15,
-      profile_pic: null,
-      date_joined: "11-15-2001",
-    },
-    {
-      _id: 1,
-      username: "jorgeorderique",
-      googleid: "19",
-      posts: [2],
-      networth: 3500,
-      following: 78,
-      followers: 30,
-      profile_pic: null,
-      date_joined: "01-31-1997",
-    },
-  ],
-  posts: [
-    {
-      _id: 0,
-      owner_id: 0,
-      post_name: "The Void",
-      pixels: [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-      ],
-      likes: 2000, // weakly increasing!! no affect if post unliked
-      views: 5000,
-      value: 25000,
-      for_sale: true,
-      tags: ["donda", "space", "nothing"],
-    },
-    {
-      _id: 1,
-      owner_id: 0,
-      post_name: "Losing",
-      pixels: [
-        [0, 1, 1],
-        [0, 1, 1],
-        [0, 0, 1],
-      ],
-      likes: 1000,
-      views: 3000,
-      value: 13000,
-      for_sale: false,
-      tags: ["L", "loser"],
-    },
-    {
-      _id: 2,
-      owner_id: 0,
-      post_name: "Bucket",
-      pixels: [
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 0, 0],
-      ],
-      likes: 300,
-      views: 7000,
-      value: 10000,
-      for_sale: true,
-      tags: ["bucket"],
-    },
-  ],
-  likes: {
-    _id: 0,
-    user_id: 0,
-    post_id: 2,
-  },
-};
-
 const UPDATE_FREQ = 1000 * 60 * 1; // 1 min
+const ART_START_VALUE = 200; // 200 VC
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -174,8 +96,8 @@ router.post("/art", (req, res) => {
     owner_id: req.user._id,
     name: req.body.name,
     pixels: req.body.pixels,
-    value: 1,
-    last_value: 1,
+    value: ART_START_VALUE,
+    last_value: ART_START_VALUE,
     likes: 0,
     views: 0,
     for_sale: req.body.for_sale,
@@ -309,6 +231,27 @@ router.post("/art/purchase", (req, res) => {
     a.owner_id = req.body.new_owner_id;
     a.save().then((updated_art) => res.send(updated_art));
   });
+});
+
+router.get("/search", (req, res) => {
+  const result = { users: [], arts: [] };
+
+  // get similar users - option: i sets search as case insensitive
+  User.find({
+    name: { $regex: ".*" + req.query.q + ".*", $options: "i" },
+  })
+    .limit(6)
+    .then((users) => {
+      result.users = users;
+
+      // get similar art
+      Art.find({ name: { $regex: ".*" + req.query.q + ".*", $options: "i" } })
+        .limit(12)
+        .then((arts) => {
+          result.arts = arts;
+        })
+        .then((r) => res.send(result));
+    });
 });
 
 //! test routes only!
