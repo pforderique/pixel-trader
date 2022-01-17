@@ -54,7 +54,13 @@ const ArtPage = (props) => {
 
   const onPurchase = () => {
     console.log("purchased!");
-    console.log(props.curr_user._id, art.owner_id);
+    post("/api/art/purchase", {
+      art_id: props.artid,
+      new_owner_id: props.curr_user._id,
+    }).then((updated_art) => {
+      setArt(updated_art);
+      setChange(getPercentChange(updated_art));
+    });
   };
 
   const onDelete = () => {

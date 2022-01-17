@@ -275,7 +275,38 @@ router.post("/art/increment", (req, res) => {
 });
 
 router.post("/art/delete", (req, res) => {
-  Art.findByIdAndDelete(req.body.art_id).then((a) => res.send(a));
+  Art.findByIdAndDelete(req.body.art_id).then((a) => {
+    // Remove art id from owners list
+    User.findById(a.owner_id).then((user) => {
+      const idx = user.art_owned.indexOf(a._id);
+      user.art_owned.splice(idx, 1);
+      user.save();
+    });
+    res.send(a);
+  });
+});
+
+router.post("/art/purchase", (req, res) => {
+  Art.findById(req.body.art_id).then((a) => {
+    // update previous owners art id list
+    User.findById(a.owner_id).then((prev_owner) => {
+      const idx = prev_owner.art_owned.indexOf(a._id);
+      prev_owner.art_owned.splice(idx, 1);
+      prev_owner.networth += Number(a.value);
+      prev_owner.save();
+    });
+
+    // update new owners art id list
+    User.findById(req.body.new_owner_id).then((new_owner) => {
+      new_owner.art_owned.push(a._id);
+      new_owner.networth -= Number(a.value);
+      new_owner.save();
+    });
+
+    // update new owner id in art document
+    a.owner_id = req.body.new_owner_id;
+    a.save().then((updated_art) => res.send(updated_art));
+  });
 });
 
 //! test routes only!

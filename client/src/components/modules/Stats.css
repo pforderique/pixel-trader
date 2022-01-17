@@ -57,6 +57,11 @@
   cursor: pointer;
 }
 
+.Stats-purchase:disabled {
+  background-color: lightgray;
+  cursor: auto;
+}
+
 @media screen and (max-width: 820px) {
   .Stats-container {
     margin-top: 2vh;

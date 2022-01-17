@@ -32,15 +32,23 @@ const Stats = (props) => {
           <div>Date Created: {props.art.date_created.substring(0, 10)}</div>
         </div>
         <div className="Stats-button-container">
-          {props.curr_user._id && props.curr_user._id === props.art.owner_id ? (
-            <button className="Stats-delete" onClick={props.onDelete}>
-              DELETE
-            </button>
-          ) : (
-            <button className="Stats-purchase" onClick={props.onPurchase}>
-              Purchase
-            </button>
-          )}
+          {props.curr_user._id &&
+            (props.curr_user._id === props.art.owner_id ? (
+              <button className="Stats-delete" onClick={props.onDelete}>
+                DELETE
+              </button>
+            ) : (
+              <button
+                className="Stats-purchase"
+                onClick={props.onPurchase}
+                disabled={
+                  !props.art.for_sale ||
+                  props.curr_user.networth < props.art.value
+                }
+              >
+                Purchase
+              </button>
+            ))}
         </div>
       </div>
     </>
