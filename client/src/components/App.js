@@ -41,7 +41,6 @@ const App = () => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       setCurrUser(user);
-      // post("/api/initsocket", { socketid: socket.id });
     });
   };
 

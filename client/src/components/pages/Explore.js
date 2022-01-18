@@ -39,11 +39,6 @@ const Explore = (props) => {
     });
   };
 
-  const onTest = () => {
-    console.log(userResults);
-    console.log(artResults);
-  };
-
   return (
     <>
       <div className="u-main-container u-transparent">
