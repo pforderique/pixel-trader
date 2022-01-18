@@ -1,11 +1,11 @@
-.ArtGrid-container {
+.UserGrid-container {
   background-color: var(--white);
   padding: var(--m);
   border-radius: var(--l);
   margin: var(--m) 0 0 0;
 }
 
-.ArtGrid-grid {
+.UserGrid-grid {
   display: grid;
   grid-gap: 1vw;
   grid-template-rows: repeat(auto-fit, 1fr);
@@ -15,20 +15,20 @@
   margin: var(--m) 0 0 0;
 }
 
-.ArtGrid-none {
+.UserGrid-none {
   display: flex;
   justify-content: center;
   font-size: x-large;
 }
 
 @media screen and (max-width: 1250px) {
-  .ArtGrid-grid {
+  .UserGrid-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (max-width: 820px) {
-  .ArtGrid-grid {
+  .UserGrid-grid {
     grid-template-columns: repeat(1, 1fr);
   }
 }

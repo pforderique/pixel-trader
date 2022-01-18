@@ -2,22 +2,27 @@ import React, { useEffect, useState } from "react";
 
 import { get, post } from "../../utilities.js";
 
+import ArtGrid from "../modules/ArtGrid";
 import SearchBar from "../modules/SearchBar";
+import UserGrid from "../modules/UserGrid";
 import "../../utilities.css";
 import "./Explore.css";
 
 const Explore = (props) => {
   const [searchtext, setText] = useState("");
-  const [userResults, setUserResults] = useState(undefined);
-  const [artResults, setArtResults] = useState(undefined);
+  const [userResults, setUserResults] = useState([]);
+  const [artResults, setArtResults] = useState([]);
+  const [artResults2, setArtResults2] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
-    if (!hasSearched) {
-      get("/api/art/trending?count=8").then((trending) => {
-        setArtResults(trending);
-      });
-    }
+    get("/api/art/trending").then((trending) => {
+      setArtResults(trending);
+    });
+
+    get("/api/art/following").then((arts) => {
+      setArtResults2(arts);
+    });
   }, []);
 
   const handleTypeChange = (event) => {
@@ -26,9 +31,17 @@ const Explore = (props) => {
   };
 
   const handleSearch = (event) => {
+    setText("");
     setHasSearched(true);
-    console.log(searchtext);
-    console.log(artResults[0]);
+    get("/api/search", { q: searchtext }).then((results) => {
+      setUserResults(results.users);
+      setArtResults(results.arts);
+    });
+  };
+
+  const onTest = () => {
+    console.log(userResults);
+    console.log(artResults);
   };
 
   return (
@@ -39,11 +52,14 @@ const Explore = (props) => {
           onChange={handleTypeChange}
           onSubmit={handleSearch}
         />
-        {!hasSearched && "show trending"}
-        {!hasSearched && props.curr_user._id && "show art following"}
-        {hasSearched && "show users"}
-        {hasSearched && "show arts"}
+        {!hasSearched && <ArtGrid title={"Trending"} arts={artResults} />}
+        {!hasSearched && props.curr_user._id && (
+          <ArtGrid title={"Following"} arts={artResults2} />
+        )}
+        {hasSearched && <UserGrid title={"Users"} users={userResults} />}
+        {hasSearched && <ArtGrid title={"Art"} arts={artResults} />}
       </div>
+      {/* <button onClick={onTest}>Test me!</button> */}
     </>
   );
 };

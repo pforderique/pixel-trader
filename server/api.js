@@ -266,6 +266,37 @@ router.get("/art/trending", (req, res) => {
     });
 });
 
+router.get("/art/following", (req, res) => {
+  if (!req.user) return res.send([]);
+
+  const count = req.query.count ? Number(req.query.count) : 6;
+
+  // get list of all follow objs where logged in user is the following user
+  Follow.find({ follower_id: req.user._id }).then((follows) => {
+    let popular_art = [];
+    let promises = [];
+    for (const f of follows) {
+      promises.push(
+        Art.find({ owner_id: f.following_id })
+          .sort({ views: -1 })
+          .limit(3) // limit 3 arts from each user followed
+          .then((arts) => {
+            popular_art.push(...arts);
+          })
+      );
+    }
+
+    // populate list of most popular pics
+    Promise.all(promises).then((result) => {
+      // sort by views DEC
+      popular_art.sort((art1, art2) => art2.views - art1.views);
+
+      // return first {count} elements
+      res.send(popular_art.splice(0, count));
+    });
+  });
+});
+
 router.get("/search", (req, res) => {
   // use regex to search for alike documents
   const query = { name: { $regex: ".*" + req.query.q + ".*", $options: "i" } };

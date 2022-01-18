@@ -9,11 +9,15 @@ const ArtGrid = (props) => {
     <>
       <div className="ArtGrid-container">
         <div className="u-xlarge">{props.title}:</div>
-        <div className="ArtGrid-grid">
-          {props.arts.map((art) => (
-            <ArtBlock key={`art_${art._id}`} art={art} />
-          ))}
-        </div>
+        {props.arts.length > 0 ? (
+          <div className="ArtGrid-grid">
+            {props.arts.map((art) => (
+              <ArtBlock key={`art_${art._id}`} art={art} />
+            ))}
+          </div>
+        ) : (
+          <div className="ArtGrid-none">no art found</div>
+        )}
       </div>
     </>
   );
