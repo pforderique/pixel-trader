@@ -29,7 +29,6 @@
     "mongoose": "^5.11.9",
     "nodemon": "^2.0.6",
     "react": "^16.14.0",
-    "react-color": "^2.19.3",
     "react-dom": "^16.14.0",
     "react-google-login": "^5.2.1",
     "react-router-dom": "^5.2.0",
