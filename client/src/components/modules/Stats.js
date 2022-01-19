@@ -31,13 +31,16 @@ const Stats = (props) => {
           <div>Creator: {props.creator}</div>
           <div>Date Created: {props.art.date_created.substring(0, 10)}</div>
         </div>
-        <div className="Stats-button-container">
-          {props.curr_user._id &&
-            (props.curr_user._id === props.art.owner_id ? (
-              <button className="Stats-delete" onClick={props.onDelete}>
-                DELETE
-              </button>
-            ) : (
+        {props.curr_user._id &&
+          (props.curr_user._id === props.art.owner_id ? (
+            <div className="Stats-trash">
+              <i
+                class="far fa-trash-alt Stats-delete"
+                onClick={props.onDelete}
+              ></i>
+            </div>
+          ) : (
+            <div className="Stats-button-container">
               <button
                 className="Stats-purchase"
                 onClick={props.onPurchase}
@@ -48,8 +51,8 @@ const Stats = (props) => {
               >
                 Purchase
               </button>
-            ))}
-        </div>
+            </div>
+          ))}
       </div>
     </>
   );

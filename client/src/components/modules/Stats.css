@@ -31,6 +31,12 @@
   margin-top: 1vw;
 }
 
+.Stats-trash {
+  display: flex;
+  justify-content: end;
+  margin-top: 1vw;
+}
+
 .Stats-delete {
   color: white;
   background-color: rgb(223, 0, 0);
