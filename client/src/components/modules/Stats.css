@@ -15,6 +15,11 @@
   margin-top: 1vw;
 }
 
+.Stats-user:hover {
+  cursor: pointer;
+  color: var(--primary--light);
+}
+
 .Stats-like {
   cursor: pointer;
   color: black;

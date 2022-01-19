@@ -32,10 +32,8 @@ const ArtPage = (props) => {
         });
 
         // get owner and creator names for display
-        get("/api/user", { user_id: a.owner_id }).then((o) => setOwner(o.name));
-        get("/api/user", { user_id: a.creator_id }).then((c) =>
-          setCreator(c.name)
-        );
+        get("/api/user", { user_id: a.owner_id }).then((o) => setOwner(o));
+        get("/api/user", { user_id: a.creator_id }).then((c) => setCreator(c));
       }
     });
   }, []);
@@ -109,6 +107,16 @@ const ArtPage = (props) => {
     });
   };
 
+  const onOwnerClick = () => {
+    if (!owner) return;
+    window.location.href = `/profile/${owner._id}`;
+  };
+
+  const onCreatorClick = () => {
+    if (!creator) return;
+    window.location.href = `/profile/${creator._id}`;
+  };
+
   if (art === undefined) return <div>Loading...</div>;
   if (art === null) return <div>Could not find art.</div>;
 
@@ -132,6 +140,8 @@ const ArtPage = (props) => {
             onUnlike={onUnlike}
             onLike={onLike}
             onToggle={updateForSale}
+            onOwnerClick={onOwnerClick}
+            onCreatorClick={onCreatorClick}
             isLiked={isLiked}
             curr_user={props.curr_user}
           />

@@ -4,7 +4,9 @@ import "../../utilities.css";
 import "./Stats.css";
 
 const Stats = (props) => {
-  if (!props.art) return <div>Loading art...</div>;
+  if (!props.art || !props.owner || !props.creator)
+    return <div>Loading art...</div>;
+
   return (
     <>
       <div className="Stats-container">
@@ -22,13 +24,19 @@ const Stats = (props) => {
             ))}
         </div>
         <div className="Stats-stats">
-          <div>Owner: {props.owner}</div>
+          Owner:
+          <span className="Stats-user" onClick={props.onOwnerClick}>
+            {" " + props.owner.name}
+          </span>
           <div>Status: {props.art.for_sale ? "For Sale" : "Not For Sale"}</div>
           <div>Value: {props.art.value} VC</div>
           <div>Change: {props.percentChange}%</div>
           <div>Views: {props.art.views}</div>
           <div>Likes: {props.art.likes}</div>
-          <div>Creator: {props.creator}</div>
+          Creator:
+          <span className="Stats-user" onClick={props.onCreatorClick}>
+            {" " + props.creator.name}
+          </span>
           <div>Date Created: {props.art.date_created.substring(0, 10)}</div>
         </div>
         {props.curr_user._id &&

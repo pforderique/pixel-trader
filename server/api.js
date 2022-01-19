@@ -6,8 +6,8 @@
 | This file defines the routes for your server.
 |
 */
-const UPDATE_FREQ = 1000 * 60 * 1; // 1 min
-const ART_START_VALUE = 200; // 200 VC
+const UPDATE_FREQ = 1000 * 60 * 60 * 1; // 1 hr
+const ART_START_VALUE = 500; // 500 VC
 
 const express = require("express");
 const mongoose = require("mongoose");
