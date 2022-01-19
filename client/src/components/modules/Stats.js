@@ -33,9 +33,17 @@ const Stats = (props) => {
         </div>
         {props.curr_user._id &&
           (props.curr_user._id === props.art.owner_id ? (
-            <div className="Stats-trash">
+            <div className="Stats-owner">
+              <label>
+                For Sale?
+                <input
+                  type="checkbox"
+                  checked={props.art.for_sale}
+                  onChange={props.onToggle}
+                />
+              </label>
               <i
-                class="far fa-trash-alt Stats-delete"
+                className="far fa-trash-alt Stats-delete"
                 onClick={props.onDelete}
               ></i>
             </div>

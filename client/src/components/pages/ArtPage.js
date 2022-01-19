@@ -102,6 +102,13 @@ const ArtPage = (props) => {
     });
   };
 
+  const updateForSale = () => {
+    console.log("for sale updated!");
+    get("/api/art/saletoggle", { art_id: props.artid }).then((a) => {
+      setArt(a);
+    });
+  };
+
   if (art === undefined) return <div>Loading...</div>;
   if (art === null) return <div>Could not find art.</div>;
 
@@ -124,6 +131,7 @@ const ArtPage = (props) => {
             onDelete={onDelete}
             onUnlike={onUnlike}
             onLike={onLike}
+            onToggle={updateForSale}
             isLiked={isLiked}
             curr_user={props.curr_user}
           />

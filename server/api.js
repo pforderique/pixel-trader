@@ -297,6 +297,13 @@ router.get("/art/following", (req, res) => {
   });
 });
 
+router.get("/art/saletoggle", (req, res) => {
+  Art.findById(req.query.art_id).then((art) => {
+    art.for_sale = !Boolean(art.for_sale);
+    art.save().then((r) => res.send(art));
+  });
+});
+
 router.get("/search", (req, res) => {
   // use regex to search for alike documents
   const query = { name: { $regex: ".*" + req.query.q + ".*", $options: "i" } };
